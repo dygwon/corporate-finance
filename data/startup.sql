@@ -1,31 +1,31 @@
 CREATE DATABASE IF NOT EXISTS Corporate_Finance;
 USE Corporate_Finance;
 
-DROP TABLE IF EXISTS Country;
-DROP TABLE IF EXISTS Rating;
-DROP TABLE IF EXISTS Region;
+DROP TABLE IF EXISTS country;
+DROP TABLE IF EXISTS rating;
+DROP TABLE IF EXISTS region;
 
-CREATE TABLE Region (
-	ID INT AUTO_INCREMENT PRIMARY KEY,
-    Name VARCHAR(50) NOT NULL
+CREATE TABLE region (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(50) NOT NULL
 );
 
-CREATE TABLE Rating (
-	ID INT AUTO_INCREMENT PRIMARY KEY,
-    Rating VARCHAR(4) NOT NULL
+CREATE TABLE rating (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+    rating VARCHAR(4) NOT NULL
 );
 
-CREATE TABLE Country (
-    Name VARCHAR(60) NOT NULL,
-    RegionID INT NOT NULL,
-    RatingID INT NOT NULL,
-    ID INT AUTO_INCREMENT PRIMARY KEY,
+CREATE TABLE country (
+    name VARCHAR(60) NOT NULL,
+    region_id INT NOT NULL,
+    rating_id INT NOT NULL,
+    id INT AUTO_INCREMENT PRIMARY KEY,
     
-    FOREIGN KEY (RegionID) REFERENCES Region(ID) ON UPDATE CASCADE ON DELETE RESTRICT,
-    FOREIGN KEY (RatingID) REFERENCES Rating(ID) ON UPDATE CASCADE ON DELETE RESTRICT
+    FOREIGN KEY (region_id) REFERENCES region(id) ON UPDATE CASCADE ON DELETE RESTRICT,
+    FOREIGN KEY (rating_id) REFERENCES rating(id) ON UPDATE CASCADE ON DELETE RESTRICT
 );
 
-INSERT INTO Region (Name) VALUES
+INSERT INTO region (name) VALUES
 ("Middle East"),
 ("Eastern Europe & Russia"),
 ("Western Europe"),
@@ -36,9 +36,9 @@ INSERT INTO Region (Name) VALUES
 ("Asia"),
 ("North America"),
 ("Frontier Markets");
-SELECT * FROM Region;
+SELECT * FROM region;
 
-INSERT INTO Rating (Rating) VALUES
+INSERT INTO rating (rating) VALUES
 ("A1"),
 ("A2"),
 ("A3"),
@@ -61,16 +61,16 @@ INSERT INTO Rating (Rating) VALUES
 ("Caa2"),
 ("Caa3"),
 ("NR");
-SELECT * FROM Rating;
+SELECT * FROM rating;
 
 SHOW VARIABLES LIKE "secure_file_priv";
 SET GLOBAL local_infile=1;
 
 LOAD DATA LOCAL INFILE '/var/lib/mysql-files/upload_one.csv'
-INTO TABLE Country
+INTO TABLE country
 FIELDS TERMINATED BY ','
 ENCLOSED BY '"'
 LINES TERMINATED BY '\n'
 IGNORE 1 ROWS;
 
-SELECT * FROM Country;
+SELECT * FROM country;
